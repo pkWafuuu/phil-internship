@@ -5,9 +5,29 @@ import nftImage from "../../images/nftImage.jpg";
 import axios from "axios"
 import { useEffect } from "react";
 import { useState } from "react";
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 const HotCollections = () => {
 	const [collections, setCollections] = useState([])
+
+	const state= {
+		responsive:{
+				0: {
+						items: 1,
+				},
+				580: {
+						items: 2,
+				},
+				980: {
+						items: 3,
+				},
+				1200: {
+						items: 4,
+				},
+		},
+}
 
 	useEffect(() => {
 		async function fetchHotCollections(){
@@ -27,9 +47,17 @@ const HotCollections = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+					<OwlCarousel 
+						className='owl-theme' 
+						items={4} 
+						margin={15} 
+						loop 
+						nav
+						dots={false}
+						responsive={state.responsive}
+					>
           {collections.map(collection => (
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={collection.id}>
-              <div className="nft_coll">
+              <div className="nft_coll" key={collection.id}>
                 <div className="nft_wrap">
                   <Link to="/item-details">
                     <img src={collection.nftImage} className="lazy img-fluid" alt="" />
@@ -48,8 +76,8 @@ const HotCollections = () => {
                   <span>ERC-{collection.code}</span>
                 </div>
               </div>
-            </div>
           ))}
+					</OwlCarousel>
         </div>
       </div>
     </section>
